@@ -15,6 +15,7 @@ python-multipart==0.0.6
 
 # Logging e monitoramento
 structlog==23.2.0
+prometheus-fastapi-instrumentator==7.0.0  # Métricas Prometheus
 
 # Validação e serialização
 email-validator==2.1.0
@@ -32,3 +33,5 @@ mypy==1.7.1
 # Utilitários
 python-dotenv==1.0.1
 python-dateutil==2.9.0.post0
+redis==5.0.3  # Para health checks do Redis
+asgi-correlation-id==4.2.0  # Para request IDs

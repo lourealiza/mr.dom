@@ -10,8 +10,9 @@ from ..domain.bot_logic import step_transition
 
 router = APIRouter()
 
-HMAC_SECRET = os.getenv("HMAC_SECRET", "changeme")
-ACCOUNT_ID = os.getenv("ACCOUNT_ID", "changeme")
+# Use environment variable names consistent with config/env files
+HMAC_SECRET = os.getenv("CHATWOOT_HMAC_SECRET", os.getenv("HMAC_SECRET", "changeme"))
+ACCOUNT_ID = os.getenv("CHATWOOT_ACCOUNT_ID", os.getenv("ACCOUNT_ID", "changeme"))
 
 async def verify_request(req: Request) -> bool:
 	body = await req.body()

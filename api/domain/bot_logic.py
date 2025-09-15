@@ -8,8 +8,9 @@ from .models import (
     MessageAnalysis, LeadQualification, AgentBotResponse,
     ActionType, IntentType, InterestLevel, UrgencyLevel,
     ConversationContext, ContactInfo, BotConfiguration,
+    State,
 )
-from services.openai_client import OpenAIClient
+from ..services.openai_client import OpenAIClient
 
 logger = logging.getLogger(__name__)
 
@@ -274,6 +275,63 @@ class BotLogic:
         except Exception as e:
             logger.error(f"Erro ao verificar horário comercial: {str(e)}")
             return True  # Assumir horário comercial em caso de erro
+
+
+def extract_name(text: str) -> str | None:
+    """Extract name from user text or return None."""
+    # Very basic name extraction, could be improved with NLP
+    words = text.strip().split()
+    if not words:
+        return None
+    # Take first word that's not a greeting
+    greetings = {"oi", "olá", "ola", "hey", "hi"}
+    for word in words:
+        if word.lower() not in greetings:
+            return word.title()
+    return None
+
+
+def step_transition(state: State, user_text: str) -> tuple[State, str, str]:
+    """Process user input and return updated state, reply text, and next action.
+    
+    Args:
+        state: Current conversation state with user info
+        user_text: Text message from user
+    
+    Returns:
+        tuple:
+            - Updated State object
+            - Reply text to send to user
+            - Action to take (handoff, create_lead, schedule, or None)
+    """
+    # Welcome/initial state
+    if not state.nome:
+        state.nome = extract_name(user_text)
+        if state.nome:
+            return state, "Ótimo! Qual é o nome da sua empresa?", None
+        return state, "Olá! Para começar, qual é o seu nome?", None
+    
+    # Get company name
+    if not state.empresa:
+        state.empresa = user_text
+        return state, "Qual é o seu cargo na empresa?", None
+    
+    # Get role/position
+    if not state.cargo:
+        state.cargo = user_text
+        return state, "Que ferramentas de vendas você usa hoje?", None
+    
+    # Get current tools
+    if not state.ferramentas:
+        state.ferramentas = user_text
+        return state, "Qual é sua principal dor hoje?", None
+    
+    # Get main pain point
+    if not state.dor_principal:
+        state.dor_principal = user_text
+        return state, "Obrigado! Um de nossos consultores entrará em contato.", "handoff"
+    
+    return state, "Como posso ajudar?", None
 
     def should_escalate_immediately(self, analysis: MessageAnalysis) -> bool:
         """Verificar se deve escalar imediatamente"""
