@@ -18,7 +18,7 @@ structlog==23.2.0
 prometheus-fastapi-instrumentator==7.1.0  # Métricas Prometheus
 
 # Validação e serialização
-email-validator==2.1.0
+email-validator==2.3.0
 
 # Testes
 pytest==8.4.2
