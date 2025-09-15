@@ -45,3 +45,22 @@ class ChatInput(BaseModel):
     message: str
     # evita default mutável com Field(default_factory=dict)
     context: dict = Field(default_factory=dict)
+
+
+class State(BaseModel):
+    """Conversational state stored in Chatwoot custom_attributes.
+
+    Only include the fields that are read/written by the bot:
+    """
+    nome: str | None = None
+    sobrenome: str | None = None
+    empresa: str | None = None
+    cargo: str | None = None
+    email: EmailStr | None = None
+    celular: str | None = None
+    horario1: datetime | None = None
+    horario2: datetime | None = None
+    ferramentas: str | None = None
+    dor_principal: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
