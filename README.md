@@ -114,6 +114,16 @@ pytest
 - Validação de webhooks via HMAC (variáveis `CHATWOOT_HMAC_SECRET`/`HMAC_SECRET`)
 - Credenciais somente via variáveis de ambiente
 
+## Documentação
+
+Consulte a documentação completa em `docs/`:
+
+- Visão Geral: `docs/overview.md`
+- Endpoints da API: `docs/api.md`
+- Serviços: `docs/services.md`
+- Domínio (Modelos e Bot): `docs/domain.md`
+- Configuração: `docs/configuration.md`
+
 ## Problemas conhecidos
 
 - Certifique‑se de preencher as variáveis do Chatwoot e OpenAI no `.env` antes de iniciar.
