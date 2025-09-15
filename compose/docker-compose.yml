@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # API Principal
   mrdom-sdr-api:
@@ -22,8 +20,10 @@ services:
       - AUTO_RESPONSE_ENABLED=${AUTO_RESPONSE_ENABLED:-true}
       - BUSINESS_HOURS=${BUSINESS_HOURS}
       - TIMEZONE=${TIMEZONE:-America/Sao_Paulo}
+      - PYTHONPATH=/app
     volumes:
       - ../api:/app
+      - ../app:/app/app
       - ./logs:/app/logs
     restart: unless-stopped
     depends_on:
@@ -87,7 +87,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus.yml:/etc/prometheus:ro
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'

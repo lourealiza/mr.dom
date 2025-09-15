@@ -1,11 +1,15 @@
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 
-# Load environment variables
-load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config.env'))
+# Load environment variables from repository root .env (if present)
+_repo_root = Path(__file__).resolve().parents[1]
+_env_path = _repo_root / ".env"
+if _env_path.exists():
+    load_dotenv(_env_path)
 
 # Import routers
 from .routers.chatwoot_agentbot import router as chatwoot_router
@@ -46,5 +50,3 @@ Instrumentator().instrument(app).expose(
     endpoint="/metrics",
     include_in_schema=False
 )
-def health():
-    return {"ok": True}
