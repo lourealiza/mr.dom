@@ -15,7 +15,7 @@ python-multipart==0.0.6
 
 # Logging e monitoramento
 structlog==23.2.0
-prometheus-fastapi-instrumentator==7.0.0  # Métricas Prometheus
+prometheus-fastapi-instrumentator==7.1.0  # Métricas Prometheus
 
 # Validação e serialização
 email-validator==2.1.0
