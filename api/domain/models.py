@@ -64,3 +64,83 @@ class State(BaseModel):
     dor_principal: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
+
+
+# --- Additional simple models/enums used by bot_logic.py ---
+from enum import Enum
+from typing import Optional, Dict, Any
+
+
+class IntentType(str, Enum):
+    UNKNOWN = "unknown"
+    GREETING = "greeting"
+    QUESTION = "question"
+    INTEREST = "interest"
+    COMPLAINT = "complaint"
+
+
+class ActionType(str, Enum):
+    NO_ACTION = "no_action"
+    ESCALATE_TO_HUMAN = "escalate_to_human"
+    SEND_AUTOMATED_RESPONSE = "send_automated_response"
+    TRIGGER_N8N_WORKFLOW = "trigger_n8n_workflow"
+    SCHEDULE_FOLLOW_UP = "schedule_follow_up"
+
+
+class InterestLevel(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+
+class UrgencyLevel(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+
+class MessageAnalysis(BaseModel):
+    intent: IntentType = IntentType.UNKNOWN
+    interest_level: InterestLevel = InterestLevel.LOW
+    objection_type: Optional[str] = None
+    next_steps: str = ""
+    urgency: UrgencyLevel = UrgencyLevel.LOW
+    confidence: float = 0.5
+    extracted_info: Optional[Dict[str, Any]] = None
+
+
+class LeadQualification(BaseModel):
+    qualification_score: int = 50
+    budget_indication: str = "unknown"
+    authority_level: str = "unknown"
+    need_level: str = "unknown"
+    timeline: str = "unknown"
+    next_best_action: str = "manual_review"
+    risk_factors: list = Field(default_factory=list)
+    opportunity_size: str = "unknown"
+
+
+class AgentBotResponse(BaseModel):
+    text: str
+    action: Optional[str] = None
+
+
+class ConversationContext(BaseModel):
+    last_seen: Optional[datetime] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+
+class ContactInfo(BaseModel):
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+
+
+class BotConfiguration(BaseModel):
+    welcome_message: str = ""
+    escalation_keywords: list = Field(default_factory=list)
+    auto_response_enabled: bool = True
+    qualification_questions: list = Field(default_factory=list)
+    business_hours: dict = Field(default_factory=dict)
+    timezone: str = "UTC"
+

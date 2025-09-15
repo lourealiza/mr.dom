@@ -4,10 +4,10 @@ from typing import Dict, Any, Optional, List
 from datetime import datetime, timedelta
 import json
 
-from domain.models import (
-    MessageAnalysis, LeadQualification, AgentBotResponse, 
+from .models import (
+    MessageAnalysis, LeadQualification, AgentBotResponse,
     ActionType, IntentType, InterestLevel, UrgencyLevel,
-    ConversationContext, ContactInfo, BotConfiguration
+    ConversationContext, ContactInfo, BotConfiguration,
 )
 from services.openai_client import OpenAIClient
 
