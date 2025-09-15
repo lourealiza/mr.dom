@@ -1,0 +1,127 @@
+version: '3.8'
+
+services:
+  # API Principal
+  mrdom-sdr-api:
+    build:
+      context: ..
+      dockerfile: compose/Dockerfile
+    container_name: mrdom-sdr-api
+    ports:
+      - "8000:8000"
+    environment:
+      - CHATWOOT_BASE_URL=${CHATWOOT_BASE_URL}
+      - CHATWOOT_ACCESS_TOKEN=${CHATWOOT_ACCESS_TOKEN}
+      - CHATWOOT_ACCOUNT_ID=${CHATWOOT_ACCOUNT_ID}
+      - N8N_BASE_URL=${N8N_BASE_URL}
+      - N8N_API_KEY=${N8N_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-3.5-turbo}
+      - BOT_WELCOME_MESSAGE=${BOT_WELCOME_MESSAGE}
+      - ESCALATION_KEYWORDS=${ESCALATION_KEYWORDS}
+      - AUTO_RESPONSE_ENABLED=${AUTO_RESPONSE_ENABLED:-true}
+      - BUSINESS_HOURS=${BUSINESS_HOURS}
+      - TIMEZONE=${TIMEZONE:-America/Sao_Paulo}
+    volumes:
+      - ../api:/app
+      - ./logs:/app/logs
+    restart: unless-stopped
+    depends_on:
+      - redis
+    networks:
+      - mrdom-network
+
+  # Redis para cache e sessões
+  redis:
+    image: redis:7-alpine
+    container_name: mrdom-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - mrdom-network
+
+  # N8N para automação (opcional - pode ser externo)
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: mrdom-n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin123}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=${TIMEZONE:-America/Sao_Paulo}
+    volumes:
+      - n8n_data:/home/node/.n8n
+    restart: unless-stopped
+    networks:
+      - mrdom-network
+
+  # Nginx para proxy reverso (opcional)
+  nginx:
+    image: nginx:alpine
+    container_name: mrdom-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - mrdom-sdr-api
+    restart: unless-stopped
+    networks:
+      - mrdom-network
+
+  # Monitoramento com Prometheus (opcional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: mrdom-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - mrdom-network
+
+  # Grafana para dashboards (opcional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: mrdom-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - mrdom-network
+
+volumes:
+  redis_data:
+  n8n_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  mrdom-network:
+    driver: bridge
