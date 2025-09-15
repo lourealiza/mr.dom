@@ -35,7 +35,8 @@ mrdom-sdr-mvp/
 │  └─ Dockerfile              # Imagem da API
 ├─ env.example                # Exemplo de .env
 ├─ requirements.txt           # Dependências Python
-└─ README.md                  # Este arquivo
+├─ README.md                  # Este arquivo
+└─ docs/                      # Documentação abrangente
 ```
 
 ## Instalação
@@ -97,6 +98,16 @@ N8N_API_KEY=seu_api_key
 - Webhook (Chatwoot AgentBot): `POST /api/v1/webhooks/agentbot`
 
 Para configurar o webhook no Chatwoot, aponte para `https://seu-host/api/v1/webhooks/agentbot` e habilite eventos relevantes (ex.: `message_created`).
+
+## Documentação
+
+A documentação completa está em `docs/`. Pontos de entrada:
+- `docs/README.md` (sumário)
+- `docs/api.md` (endpoints HTTP)
+- `docs/services.md` (clientes Chatwoot/N8N/OpenAI)
+- `docs/domain.md` (BotLogic, State e modelos)
+- `docs/core.md` (settings, logging, middlewares, worker)
+- `docs/examples.md` (exemplos práticos)
 
 ## Testes
 
