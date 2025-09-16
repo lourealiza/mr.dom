@@ -13,7 +13,7 @@ Sistema de automação de vendas (SDR) com integração a Chatwoot, N8N e OpenAI
 
 ## Estrutura do Projeto
 
-```
+```text
 mrdom-sdr-mvp/
 ├─ api/
 │  ├─ main.py                 # FastAPI app
@@ -36,7 +36,7 @@ mrdom-sdr-mvp/
 ├─ env.example                # Exemplo de .env
 ├─ requirements.txt           # Dependências Python
 └─ README.md                  # Este arquivo
-```
+```bash
 
 ## Instalação
 
@@ -48,23 +48,25 @@ mrdom-sdr-mvp/
 
 ### 1. Configuração de ambiente
 
-```
+```bash
 cp env.example .env
 # Edite .env com suas credenciais
-```
+```bash
 
 ### 2. Rodar local (desenvolvimento)
 
-```
+```env
 pip install -r requirements.txt
 uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
-```
+```bash
 
 ### 3. Rodar com Docker
 
 ```
+
 cd compose
 docker-compose up -d --build
+
 ```
 
 Notas Docker:
@@ -76,18 +78,27 @@ Notas Docker:
 Defina as variáveis em `.env` (veja `env.example`). Principais:
 
 ```
+
 # Chatwoot
-CHATWOOT_BASE_URL=https://app.chatwoot.com
+
+CHATWOOT_BASE_URL=<https://app.chatwoot.com>
 CHATWOOT_ACCESS_TOKEN=seu_token
 CHATWOOT_ACCOUNT_ID=seu_account_id
 
 # OpenAI
+
 OPENAI_API_KEY=sk-sua_chave
 OPENAI_MODEL=gpt-3.5-turbo
 
 # N8N (opcional)
-N8N_BASE_URL=http://localhost:5678
+
+N8N_BASE_URL=<http://localhost:5678>
 N8N_API_KEY=seu_api_key
+N8N_BASIC_AUTH_USER=
+N8N_BASIC_AUTH_PASSWORD=
+N8N_WEBHOOK_CREATE_LEAD_URL=
+N8N_WEBHOOK_SCHEDULE_URL=
+
 ```
 
 ## API
@@ -101,7 +112,9 @@ Para configurar o webhook no Chatwoot, aponte para `https://seu-host/api/v1/webh
 ## Testes
 
 ```
+
 pytest
+
 ```
 
 ## Observabilidade
@@ -111,10 +124,9 @@ pytest
 
 ## Segurança
 
-- Validação de webhooks via HMAC (variáveis `CHATWOOT_HMAC_SECRET`/`HMAC_SECRET`)
+- Validação de webhooks via HMAC: defina `CHATWOOT_WEBHOOK_SECRET`
 - Credenciais somente via variáveis de ambiente
 
 ## Problemas conhecidos
 
 - Certifique‑se de preencher as variáveis do Chatwoot e OpenAI no `.env` antes de iniciar.
-

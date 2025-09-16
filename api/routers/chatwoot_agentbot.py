@@ -4,17 +4,25 @@ import os
 import hmac
 import hashlib
 from ..services.chatwoot_client import chatwoot_client
-from ..services.n8n_client import trigger as n8n_trigger
+from ..services.n8n_client import trigger_flexible as n8n_trigger
 from ..domain.models import State
 from ..domain.bot_logic import step_transition
 
 router = APIRouter()
 
-# Use environment variable names consistent with config/env files
-HMAC_SECRET = os.getenv("CHATWOOT_HMAC_SECRET", os.getenv("HMAC_SECRET", "changeme"))
+# Unified env var for webhook HMAC secret, with backwards-compatible fallbacks
+HMAC_SECRET = (
+    os.getenv("CHATWOOT_WEBHOOK_SECRET")
+    or os.getenv("CHATWOOT_HMAC_SECRET")
+    or os.getenv("HMAC_SECRET")
+    or ""
+)
 ACCOUNT_ID = os.getenv("CHATWOOT_ACCOUNT_ID", os.getenv("ACCOUNT_ID", "changeme"))
 
 async def verify_request(req: Request) -> bool:
+	# Reject if no secret configured
+	if not HMAC_SECRET:
+		return False
 	body = await req.body()
 	sig = req.headers.get("X-Chatwoot-Signature", "")
 	mac = hmac.new(HMAC_SECRET.encode(), msg=body, digestmod=hashlib.sha256)

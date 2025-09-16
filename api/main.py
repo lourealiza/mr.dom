@@ -13,6 +13,7 @@ if _env_path.exists():
 
 # Import routers
 from .routers.chatwoot_agentbot import router as chatwoot_router
+from .routers.chatwoot_token_webhook import router as chatwoot_token_router
 from .routers.health import router as health_router
 
 # Import core configuration
@@ -40,6 +41,11 @@ app.include_router(
 )
 app.include_router(
     chatwoot_router,
+    prefix="/api/v1/webhooks",
+    tags=["webhooks"]
+)
+app.include_router(
+    chatwoot_token_router,
     prefix="/api/v1/webhooks",
     tags=["webhooks"]
 )
