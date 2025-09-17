@@ -2,6 +2,7 @@
 from datetime import datetime
 import re
 from typing import Literal
+from typing import Union
 
 from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator
 
@@ -52,16 +53,16 @@ class State(BaseModel):
 
     Only include the fields that are read/written by the bot:
     """
-    nome: str | None = None
-    sobrenome: str | None = None
-    empresa: str | None = None
-    cargo: str | None = None
-    email: EmailStr | None = None
-    celular: str | None = None
-    horario1: datetime | None = None
-    horario2: datetime | None = None
-    ferramentas: str | None = None
-    dor_principal: str | None = None
+    nome: Union[str, None] = None
+    sobrenome: Union[str, None] = None
+    empresa: Union[str, None] = None
+    cargo: Union[str, None] = None
+    email: Union[EmailStr, None] = None
+    celular: Union[str, None] = None
+    horario1: Union[datetime, None] = None
+    horario2: Union[datetime, None] = None
+    ferramentas: Union[str, None] = None
+    dor_principal: Union[str, None] = None
 
     model_config = ConfigDict(from_attributes=True)
 

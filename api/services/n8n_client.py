@@ -48,7 +48,7 @@ async def trigger_flexible(slug_or_url: str, payload: dict):
         ct = r.headers.get("content-type", "")
         return r.json() if "application/json" in ct else {"status": r.status_code}
 import logging
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple
 import asyncio
 
 logger = logging.getLogger(__name__)

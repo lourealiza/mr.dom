@@ -53,4 +53,4 @@ class Settings(BaseSettings):
         )
 
 
-settings = Settings()
+settings = Settings(CHATWOOT_WEBHOOK_SECRET="dummy")

@@ -21,7 +21,7 @@ async def health_check() -> Dict[str, str]:
     return {"status": "ok"}
 
 @router.get("/readiness")
-async def readiness_check() -> Dict[str, str]:
+async def readiness_check() -> Dict[str, Any]:
     """Readiness probe that checks external service connectivity"""
     try:
         # Check Chatwoot connection
