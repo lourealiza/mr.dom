@@ -1,0 +1,6 @@
+INFO:     Will watch for changes in these directories: ['D:\\2.mrdom-sdr-mvp']
+INFO:     Uvicorn running on http://0.0.0.0:8011 (Press CTRL+C to quit)
+INFO:     Started reloader process [36596] using WatchFiles
+INFO:     Started server process [39896]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

@@ -1,0 +1,2 @@
+INFO:     127.0.0.1:57893 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57893 - "POST /ragask HTTP/1.1" 400 Bad Request
