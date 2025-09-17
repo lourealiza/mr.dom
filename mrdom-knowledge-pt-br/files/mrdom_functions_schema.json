@@ -1,0 +1,224 @@
+{
+  "metadata": {
+    "name": "Mr.DOM SDR – Function Schema",
+    "version": "1.0.0",
+    "generated_at": "2025-08-20T16:15:08.818457",
+    "description": "Funções para orquestração do agente (create_lead, schedule_meeting, log_event, send_followup) e exemplos de chamadas."
+  },
+  "functions": [
+    {
+      "name": "create_lead",
+      "description": "Cria/atualiza lead no CRM",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "sobrenome": {
+            "type": "string"
+          },
+          "empresa": {
+            "type": "string"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+          },
+          "telefone": {
+            "type": "string",
+            "pattern": "^\\+?55\\s?\\(?\\d{2}\\)?\\s?9?\\d{4}\\-?\\d{4}$"
+          },
+          "segmento": {
+            "type": "string"
+          },
+          "tamanho_time": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "ferramentas_crm": {
+            "type": "string"
+          },
+          "ferramentas_marketing": {
+            "type": "string"
+          },
+          "canais_mensageria": {
+            "type": "string"
+          },
+          "principal_dor": {
+            "type": "string"
+          },
+          "origem": {
+            "type": "string",
+            "enum": [
+              "WhatsApp",
+              "Site",
+              "Instagram",
+              "Telegram"
+            ]
+          }
+        },
+        "required": [
+          "nome",
+          "sobrenome",
+          "empresa",
+          "email",
+          "telefone",
+          "origem"
+        ]
+      }
+    },
+    {
+      "name": "schedule_meeting",
+      "description": "Agenda a call de 30 min e retorna convite/links",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "telefone": {
+            "type": "string"
+          },
+          "titulo": {
+            "type": "string"
+          },
+          "duracao_min": {
+            "type": "integer",
+            "enum": [
+              30
+            ]
+          },
+          "opcao_horario": {
+            "type": "string",
+            "description": "ISO 8601 – ex.: 2025-08-21T13:00:00"
+          },
+          "fuso": {
+            "type": "string",
+            "default": "America/Sao_Paulo"
+          },
+          "observacoes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "titulo",
+          "duracao_min",
+          "opcao_horario",
+          "fuso"
+        ]
+      }
+    },
+    {
+      "name": "log_event",
+      "description": "Rastreia eventos para BI/analytics",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "nome_evento": {
+            "type": "string"
+          },
+          "properties": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "nome_evento"
+        ]
+      }
+    },
+    {
+      "name": "send_followup",
+      "description": "Dispara mensagem de reengajamento em canal escolhido",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "canal": {
+            "type": "string",
+            "enum": [
+              "WhatsApp",
+              "Email",
+              "SMS"
+            ]
+          },
+          "template_id": {
+            "type": "string"
+          },
+          "placeholders": {
+            "type": "object"
+          },
+          "destinatario": {
+            "type": "string",
+            "description": "Telefone E.164 para WhatsApp/SMS ou e-mail"
+          }
+        },
+        "required": [
+          "canal",
+          "template_id",
+          "placeholders",
+          "destinatario"
+        ]
+      }
+    }
+  ],
+  "examples": {
+    "create_lead": {
+      "tool": "create_lead",
+      "arguments": {
+        "nome": "Ana",
+        "sobrenome": "Silva",
+        "empresa": "ACME",
+        "cargo": "Diretora Comercial",
+        "email": "ana.silva@acme.com.br",
+        "telefone": "+55 (11) 98888-7777",
+        "segmento": "Tecnologia",
+        "tamanho_time": 8,
+        "ferramentas_crm": "Pipedrive",
+        "ferramentas_marketing": "RD Station",
+        "canais_mensageria": "WhatsApp, Email",
+        "principal_dor": "pós não venda sem processo",
+        "origem": "WhatsApp"
+      }
+    },
+    "schedule_meeting": {
+      "tool": "schedule_meeting",
+      "arguments": {
+        "email": "ana.silva@acme.com.br",
+        "telefone": "+55 (11) 98888-7777",
+        "titulo": "Diagnóstico DOM360 (30 min)",
+        "duracao_min": 30,
+        "opcao_horario": "2025-08-21T13:00:00",
+        "fuso": "America/Sao_Paulo",
+        "observacoes": "Preferência por WhatsApp; foco em pós não venda"
+      }
+    },
+    "log_event": {
+      "tool": "log_event",
+      "arguments": {
+        "nome_evento": "meeting_scheduled",
+        "properties": {
+          "canal": "WhatsApp",
+          "origem": "inbound",
+          "lead_email": "ana.silva@acme.com.br"
+        }
+      }
+    },
+    "send_followup": {
+      "tool": "send_followup",
+      "arguments": {
+        "canal": "WhatsApp",
+        "template_id": "pos_nao_venda_D2",
+        "destinatario": "+55 (11) 98888-7777",
+        "placeholders": {
+          "nome": "Ana",
+          "horario_sug1": "2025-08-22 10:00",
+          "horario_sug2": "2025-08-22 14:00"
+        }
+      }
+    }
+  }
+}

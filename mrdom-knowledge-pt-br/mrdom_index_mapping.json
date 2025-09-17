@@ -1,0 +1,516 @@
+{
+  "chunk_ids": [
+    "9d27d8c251bc",
+    "d8762cdddb32",
+    "618818d78784",
+    "4d0cc05805d1",
+    "f86ee91a71fd",
+    "bd307992b1e3",
+    "06c3d1b3ec1f",
+    "3ba3de1c6423",
+    "a167ee408343",
+    "d977113f95e1",
+    "f216629cd3e0",
+    "c8897618ce2d",
+    "4db50883594c",
+    "2e27bf628d19",
+    "a51fa3b48034",
+    "9f454b32a0da",
+    "16b9ce221d69",
+    "fbdf8b9021ce",
+    "d6304af9616f",
+    "f252ff362f20",
+    "d9b2ad00e8e0",
+    "6813e7219778",
+    "780709a28f9b",
+    "0c796f9befef",
+    "e91d49540c79",
+    "d786ece55b4c",
+    "0328900cfeee",
+    "23591b7a39f7",
+    "e6c541a8f86e",
+    "b979bd5bdf6c",
+    "50354b5e5c2e",
+    "1e77b490d15f",
+    "822c4948ddc3",
+    "b4200b7a96ed",
+    "f547f4a73182",
+    "737ef9ab7b0d",
+    "197c99d4aca5",
+    "e86bfeaa2f3c",
+    "0596d9a3fa74",
+    "16a2e2b66a1c",
+    "6f07ef7ff713",
+    "49c503fb36fe",
+    "3a9ace1b57a3",
+    "c42f4d8df35a",
+    "29f68ab1119b",
+    "dd9ae2ee231b",
+    "583a6911a597",
+    "8633144dd028",
+    "8f29d2fb02f4",
+    "5a60cd5f5f36",
+    "e197bcfdd859"
+  ],
+  "metadatas": [
+    {
+      "filename": "DOM360 - Domine Seu Negócio - Diferenciais.pdf",
+      "path": "/mnt/data/DOM360 - Domine Seu Negócio - Diferenciais.pdf",
+      "source_type": "pdf",
+      "size_bytes": 953304,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "DOM360 - Domine Seu Negócio - Diferenciais.pdf",
+      "path": "/mnt/data/DOM360 - Domine Seu Negócio - Diferenciais.pdf",
+      "source_type": "pdf",
+      "size_bytes": 953304,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "DOM360 - Domine Seu Negócio - Diferenciais.pdf",
+      "path": "/mnt/data/DOM360 - Domine Seu Negócio - Diferenciais.pdf",
+      "source_type": "pdf",
+      "size_bytes": 953304,
+      "extracted": true,
+      "chunk_index": 2,
+      "chunk_char_len": 846
+    },
+    {
+      "filename": "Apresentação DOM Mautic - Financeiras.pdf",
+      "path": "/mnt/data/Apresentação DOM Mautic - Financeiras.pdf",
+      "source_type": "pdf",
+      "size_bytes": 906368,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Apresentação DOM Mautic - Financeiras.pdf",
+      "path": "/mnt/data/Apresentação DOM Mautic - Financeiras.pdf",
+      "source_type": "pdf",
+      "size_bytes": 906368,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Apresentação DOM Mautic - Financeiras.pdf",
+      "path": "/mnt/data/Apresentação DOM Mautic - Financeiras.pdf",
+      "source_type": "pdf",
+      "size_bytes": 906368,
+      "extracted": true,
+      "chunk_index": 2,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Apresentação DOM Mautic - Financeiras.pdf",
+      "path": "/mnt/data/Apresentação DOM Mautic - Financeiras.pdf",
+      "source_type": "pdf",
+      "size_bytes": 906368,
+      "extracted": true,
+      "chunk_index": 3,
+      "chunk_char_len": 1054
+    },
+    {
+      "filename": "Pitch Comercial 2.docx",
+      "path": "/mnt/data/Pitch Comercial 2.docx",
+      "source_type": "docx",
+      "size_bytes": 20203,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch Comercial 2.docx",
+      "path": "/mnt/data/Pitch Comercial 2.docx",
+      "source_type": "docx",
+      "size_bytes": 20203,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 341
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 2,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 3,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 4,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 5,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 6,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 7,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 8,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Pitch SDR AIDA - Tecnologia 1.docx",
+      "path": "/mnt/data/Pitch SDR AIDA - Tecnologia 1.docx",
+      "source_type": "docx",
+      "size_bytes": 28802,
+      "extracted": true,
+      "chunk_index": 9,
+      "chunk_char_len": 680
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 2,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 3,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 4,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 5,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 6,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 7,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 8,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 9,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 10,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 11,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 12,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 13,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 14,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 15,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "path": "/mnt/data/Playbook de Treinamento - SRD IA - Chatbot.docx",
+      "source_type": "docx",
+      "size_bytes": 35384,
+      "extracted": true,
+      "chunk_index": 16,
+      "chunk_char_len": 1111
+    },
+    {
+      "filename": "mrdom_message_templates.json",
+      "path": "/mnt/data/mrdom_message_templates.json",
+      "source_type": "json",
+      "size_bytes": 7929,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_message_templates.json",
+      "path": "/mnt/data/mrdom_message_templates.json",
+      "source_type": "json",
+      "size_bytes": 7929,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_message_templates.json",
+      "path": "/mnt/data/mrdom_message_templates.json",
+      "source_type": "json",
+      "size_bytes": 7929,
+      "extracted": true,
+      "chunk_index": 2,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_message_templates.json",
+      "path": "/mnt/data/mrdom_message_templates.json",
+      "source_type": "json",
+      "size_bytes": 7929,
+      "extracted": true,
+      "chunk_index": 3,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_message_templates.json",
+      "path": "/mnt/data/mrdom_message_templates.json",
+      "source_type": "json",
+      "size_bytes": 7929,
+      "extracted": true,
+      "chunk_index": 4,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_message_templates.json",
+      "path": "/mnt/data/mrdom_message_templates.json",
+      "source_type": "json",
+      "size_bytes": 7929,
+      "extracted": true,
+      "chunk_index": 5,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_message_templates.json",
+      "path": "/mnt/data/mrdom_message_templates.json",
+      "source_type": "json",
+      "size_bytes": 7929,
+      "extracted": true,
+      "chunk_index": 6,
+      "chunk_char_len": 794
+    },
+    {
+      "filename": "mrdom_functions_schema.json",
+      "path": "/mnt/data/mrdom_functions_schema.json",
+      "source_type": "json",
+      "size_bytes": 5635,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_functions_schema.json",
+      "path": "/mnt/data/mrdom_functions_schema.json",
+      "source_type": "json",
+      "size_bytes": 5635,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_functions_schema.json",
+      "path": "/mnt/data/mrdom_functions_schema.json",
+      "source_type": "json",
+      "size_bytes": 5635,
+      "extracted": true,
+      "chunk_index": 2,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_functions_schema.json",
+      "path": "/mnt/data/mrdom_functions_schema.json",
+      "source_type": "json",
+      "size_bytes": 5635,
+      "extracted": true,
+      "chunk_index": 3,
+      "chunk_char_len": 669
+    },
+    {
+      "filename": "mrdom_n8n_blueprint.json",
+      "path": "/mnt/data/mrdom_n8n_blueprint.json",
+      "source_type": "json",
+      "size_bytes": 5325,
+      "extracted": true,
+      "chunk_index": 0,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_n8n_blueprint.json",
+      "path": "/mnt/data/mrdom_n8n_blueprint.json",
+      "source_type": "json",
+      "size_bytes": 5325,
+      "extracted": true,
+      "chunk_index": 1,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_n8n_blueprint.json",
+      "path": "/mnt/data/mrdom_n8n_blueprint.json",
+      "source_type": "json",
+      "size_bytes": 5325,
+      "extracted": true,
+      "chunk_index": 2,
+      "chunk_char_len": 1200
+    },
+    {
+      "filename": "mrdom_n8n_blueprint.json",
+      "path": "/mnt/data/mrdom_n8n_blueprint.json",
+      "source_type": "json",
+      "size_bytes": 5325,
+      "extracted": true,
+      "chunk_index": 3,
+      "chunk_char_len": 627
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "name": "Mr.DOM – Templates de Mensagens",
+    "version": "1.0.0",
+    "placeholders": [
+      "{{nome}}",
+      "{{sobrenome}}",
+      "{{empresa}}",
+      "{{horario1}}",
+      "{{horario2}}",
+      "{{dia}}",
+      "{{hora}}",
+      "{{fuso}}",
+      "{{link_meet}}",
+      "{{link_ics}}"
+    ],
+    "notes": "Adapte linguagem por canal. Para WhatsApp com templates oficiais, cadastre o texto em sua BSP e referencie por template_id."
+  },
+  "templates": [
+    {
+      "id": "opening",
+      "whatsapp": {
+        "text": "Olá, eu sou o Mr.DOM, assistente do DOM360. Ajudamos PMEs a ter vendas previsíveis com CRM + automação + mensageria + BI e método simples. Posso te fazer 3 perguntas rápidas para ver se um diagnóstico de 30 min te ajuda hoje?"
+      },
+      "email": {
+        "subject": "Podemos te mostrar um diagnóstico curto para acelerar suas vendas?",
+        "html": "<p>Olá {{nome}},</p><p>Sou o Mr.DOM, do DOM360. Unimos CRM, automação, mensageria e BI com um método validado para gerar vendas previsíveis.</p><p>Posso te fazer 3 perguntas rápidas e, se fizer sentido, agendamos um diagnóstico de 30 min?</p>"
+      },
+      "sms": {
+        "text": "Sou o Mr.DOM (DOM360). Posso fazer 3 perguntas e, se fizer sentido, agendamos um diagnóstico de 30 min?"
+      }
+    },
+    {
+      "id": "qualificacao_perguntas",
+      "whatsapp": {
+        "text": "1) Depois das propostas, vocês retomam quem não decide?\\n2) Como o marketing se conecta com o comercial?\\n3) Quais ferramentas (CRM/automação/mensageria) usam hoje? Estão satisfeitos?"
+      },
+      "email": {
+        "subject": "3 perguntas rápidas para mapear oportunidades",
+        "html": "<ol><li>Depois das propostas, vocês retomam quem não decide?</li><li>Como o marketing se conecta com o comercial?</li><li>Quais ferramentas (CRM/automação/mensageria) usam hoje? Estão satisfeitos?</li></ol>"
+      },
+      "sms": {
+        "text": "3 perguntas: 1) Retomada pós-proposta? 2) Marketing conectado ao comercial? 3) Ferramentas atuais (CRM/automação/mensageria)?"
+      }
+    },
+    {
+      "id": "pitch_geral",
+      "whatsapp": {
+        "text": "Unimos CRM completo, automação, mensageria e BI com um método validado e acompanhamento próximo. Implementamos por etapas, garantindo adoção e previsibilidade."
+      },
+      "email": {
+        "subject": "Como o DOM360 entrega previsibilidade de vendas",
+        "html": "<p>Unimos CRM completo, automação de marketing, mensageria omnichannel e BI com um método de 7 passos e acompanhamento ilimitado. Implementamos por etapas, com foco em ganhos rápidos e previsibilidade.</p>"
+      },
+      "sms": {
+        "text": "DOM360 = CRM + automação + mensageria + BI + método. Implementação guiada, ganhos rápidos e previsibilidade."
+      }
+    },
+    {
+      "id": "cta_agenda",
+      "whatsapp": {
+        "text": "Consigo te encaixar amanhã às {{horario1}} ou {{horario2}} (30 min). Qual funciona melhor? Preciso confirmar nome e sobrenome, empresa, e-mail corporativo e WhatsApp."
+      },
+      "email": {
+        "subject": "Diagnóstico gratuito (30 min): {{horario1}} ou {{horario2}}",
+        "html": "<p>Tenho duas janelas para um diagnóstico de 30 min: <strong>{{horario1}}</strong> ou <strong>{{horario2}}</strong>.</p><p>Confirma seus dados (nome, empresa, e-mail corporativo e WhatsApp)?</p>"
+      },
+      "sms": {
+        "text": "Diagnóstico (30 min) amanhã: {{horario1}} ou {{horario2}}. Qual prefere?"
+      }
+    },
+    {
+      "id": "confirmacao_agendada",
+      "whatsapp": {
+        "text": "Perfeito, {{nome}}! Agendei para {{dia}} às {{hora}} ({{fuso}}). Você receberá um convite e lembretes (24h/2h). Link: {{link_meet}} | ICS: {{link_ics}}"
+      },
+      "email": {
+        "subject": "Confirmado: Diagnóstico DOM360 – {{dia}} às {{hora}}",
+        "html": "<p>Olá {{nome}},</p><p>Reunião confirmada em {{dia}} às {{hora}} ({{fuso}}).</p><p>Link da reunião: <a href='{{link_meet}}'>acessar</a></p><p>Arquivo ICS: <a href='{{link_ics}}'>baixar</a></p><p>Até lá!</p>"
+      },
+      "sms": {
+        "text": "Confirmado: {{dia}} {{hora}} ({{fuso}}). Link: {{link_meet}}"
+      }
+    },
+    {
+      "id": "objeções_curto",
+      "whatsapp": {
+        "text": "Entendo, {{nome}}. Normalmente o problema foi adoção/processo. Aqui implementamos junto e guiamos o time. Mostro em 30 min? Tenho {{horario1}} ou {{horario2}}."
+      },
+      "email": {
+        "subject": "Podemos tornar isso simples e prático (30 min)",
+        "html": "<p>Entendo sua preocupação. O DOM360 atua na implementação guiada e adoção real do time.</p><p>Que tal 30 min práticos? {{horario1}} ou {{horario2}}?</p>"
+      },
+      "sms": {
+        "text": "Tornamos simples a adoção. 30 min práticos: {{horario1}} ou {{horario2}}?"
+      }
+    },
+    {
+      "id": "vertical_financeira_pitch",
+      "whatsapp": {
+        "text": "Para financeiras, integramos captação, análise/decisão de crédito, CRM+telefonia+WhatsApp e campanhas de recompra/refinanciamento. Menos tarefas manuais, mais conversões. 30 min amanhã {{horario1}} ou {{horario2}}?"
+      },
+      "email": {
+        "subject": "Diagnóstico rápido para operação financeira mais previsível",
+        "html": "<p>Integramos captação, análise/decisão de crédito, CRM + telefonia + WhatsApp e campanhas de recompra/refinanciamento. Resultados: menos tarefas manuais e mais conversões.</p><p>Agenda de 30 min: {{horario1}} ou {{horario2}}?</p>"
+      },
+      "sms": {
+        "text": "Financeiras: captação+crédito+CRM/telefonia+recompra. 30 min: {{horario1}} ou {{horario2}}?"
+      }
+    },
+    {
+      "id": "pos_nao_venda_D0",
+      "whatsapp": {
+        "text": "Resumo prático do DOM360: organização do funil, cadências automáticas e BI para previsibilidade. Posso te encaixar amanhã {{horario1}} ou {{horario2}}?"
+      },
+      "email": {
+        "subject": "Seguimos? 30 min objetivos amanhã",
+        "html": "<p>Organizamos funil, automatizamos cadências e entregamos BI para previsibilidade.</p><p>Podemos amanhã {{horario1}} ou {{horario2}}?</p>"
+      },
+      "sms": {
+        "text": "Organização+cadências+BI. Amanhã {{horario1}} ou {{horario2}}?"
+      }
+    },
+    {
+      "id": "pos_nao_venda_D2",
+      "whatsapp": {
+        "text": "Caso de uso: integração marketing–vendas + aumento de follow-ups automáticos. Faz sentido ver em 30 min? {{horario1}} ou {{horario2}}?"
+      },
+      "email": {
+        "subject": "Exemplo prático (30 min)",
+        "html": "<p>Integração marketing–vendas + follow-ups automáticos geram ritmo e conversão.</p><p>{{horario1}} ou {{horario2}}?</p>"
+      },
+      "sms": {
+        "text": "Integração mkt–vendas+follow-ups. {{horario1}} ou {{horario2}}?"
+      }
+    },
+    {
+      "id": "pos_nao_venda_D7",
+      "whatsapp": {
+        "text": "Benefício tangível: previsibilidade com BI + automações. Seguimos com 30 min? {{horario1}} ou {{horario2}}?"
+      },
+      "email": {
+        "subject": "Previsibilidade com BI + automações",
+        "html": "<p>BI + automações = previsibilidade e escala.</p><p>Agenda: {{horario1}} ou {{horario2}}?</p>"
+      },
+      "sms": {
+        "text": "Previsibilidade com BI + automações. {{horario1}} ou {{horario2}}?"
+      }
+    },
+    {
+      "id": "pos_nao_venda_D14",
+      "whatsapp": {
+        "text": "Posso pausar e te enviar materiais, ou preferes um diagnóstico prático de 30 min? Tenho {{horario1}} ou {{horario2}}."
+      },
+      "email": {
+        "subject": "Encerramos o ciclo ou marcamos?",
+        "html": "<p>Posso pausar e enviar materiais, ou seguimos para um diagnóstico de 30 min?</p><p>{{horario1}} ou {{horario2}}?</p>"
+      },
+      "sms": {
+        "text": "Pauso e envio materiais ou marcamos 30 min? {{horario1}} ou {{horario2}}?"
+      }
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "name": "Mr.DOM SDR – Orquestração (create_lead/schedule/log_event/send_followup)",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mrdom/create_lead",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "responseData": "{\"status\":\"ok\",\"message\":\"lead recebido\"}",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook create_lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://crm.exemplo.com.br/webhooks/leads",
+        "options": {},
+        "allowUnauthorizedCerts": true,
+        "jsonParameters": true
+      },
+      "id": "2",
+      "name": "CRM Upsert Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        80,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "path": "mrdom/schedule_meeting",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "responseData": "{\"status\":\"ok\",\"message\":\"agendamento recebido\"}",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Webhook schedule_meeting",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"provider\"]}}",
+              "operation": "equal",
+              "value2": "google"
+            }
+          ]
+        }
+      },
+      "id": "4",
+      "name": "IF Google",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        80,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+        "authentication": "oAuth2",
+        "options": {},
+        "jsonParameters": true
+      },
+      "id": "5",
+      "name": "Google Calendar – Create Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        360,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://graph.microsoft.com/v1.0/me/events",
+        "authentication": "oAuth2",
+        "options": {},
+        "jsonParameters": true
+      },
+      "id": "6",
+      "name": "Microsoft 365 – Create Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        360,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "path": "mrdom/log_event",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "responseData": "{\"status\":\"ok\",\"message\":\"evento logado\"}",
+        "options": {}
+      },
+      "id": "7",
+      "name": "Webhook log_event",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://analytics.exemplo.com.br/track",
+        "options": {},
+        "jsonParameters": true
+      },
+      "id": "8",
+      "name": "Analytics – Track",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        80,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "path": "mrdom/send_followup",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "responseData": "{\"status\":\"ok\",\"message\":\"followup enviado\"}",
+        "options": {}
+      },
+      "id": "9",
+      "name": "Webhook send_followup",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://omnichannel.exemplo.com.br/messages/send-template",
+        "options": {},
+        "jsonParameters": true
+      },
+      "id": "10",
+      "name": "WhatsApp – Enviar Template",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        80,
+        900
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook create_lead": {
+      "main": [
+        [
+          {
+            "node": "CRM Upsert Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook schedule_meeting": {
+      "main": [
+        [
+          {
+            "node": "IF Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Google": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar – Create Event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Microsoft 365 – Create Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook log_event": {
+      "main": [
+        [
+          {
+            "node": "Analytics – Track",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook send_followup": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp – Enviar Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "staticData": null,
+  "pinData": null,
+  "versionId": "1"
+}
