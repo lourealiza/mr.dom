@@ -26,6 +26,9 @@ class Settings(BaseSettings):
 
     # Redis
     REDIS_URL: str = "redis://redis:6379/0"
+    DEDUPE_TTL_SECONDS: int = 300
+    RATE_LIMIT_REQUESTS: int = 60
+    RATE_LIMIT_WINDOW: int = 60  # seconds
 
     # Chatwoot
     CHATWOOT_WEBHOOK_SECRET: str
