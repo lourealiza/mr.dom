@@ -4,27 +4,16 @@ import os
 import hmac
 import hashlib
 from ..services.chatwoot_client import chatwoot_client
-from ..services.n8n_client import trigger_flexible as n8n_trigger
+from ..services.n8n_client import trigger as n8n_trigger
 from ..domain.models import State
 from ..domain.bot_logic import step_transition
-from app.core.cache import dedupe_once, rate_limit
-from app.core.settings import settings
 
 router = APIRouter()
 
-# Unified env var for webhook HMAC secret, with backwards-compatible fallbacks
-HMAC_SECRET = (
-    os.getenv("CHATWOOT_WEBHOOK_SECRET")
-    or os.getenv("CHATWOOT_HMAC_SECRET")
-    or os.getenv("HMAC_SECRET")
-    or ""
-)
-ACCOUNT_ID = os.getenv("CHATWOOT_ACCOUNT_ID", os.getenv("ACCOUNT_ID", "changeme"))
+HMAC_SECRET = os.getenv("HMAC_SECRET", "changeme")
+ACCOUNT_ID = os.getenv("ACCOUNT_ID", "changeme")
 
 async def verify_request(req: Request) -> bool:
-	# Reject if no secret configured
-	if not HMAC_SECRET:
-		return False
 	body = await req.body()
 	sig = req.headers.get("X-Chatwoot-Signature", "")
 	mac = hmac.new(HMAC_SECRET.encode(), msg=body, digestmod=hashlib.sha256)
@@ -32,38 +21,10 @@ async def verify_request(req: Request) -> bool:
 
 @router.post("/agentbot")
 async def agentbot(req: Request):
-	# Basic per-IP rate limiting (fixed window)
-	ip = req.client.host if req.client else "unknown"
-	bucket = f"rl:agentbot:{ip}"
-	allowed, _remaining = await rate_limit(
-		bucket,
-		settings.RATE_LIMIT_REQUESTS,
-		settings.RATE_LIMIT_WINDOW,
-	)
-	if not allowed:
-		raise HTTPException(status_code=429, detail="rate limited")
-
 	if not await verify_request(req):
 		raise HTTPException(status_code=401, detail="invalid signature")
 
 	payload = await req.json()
-
-	# Idempotency / de-duplication (TTL window)
-	event_id = (
-		req.headers.get("X-Event-Id")
-		or req.headers.get("Idempotency-Key")
-		or str(
-			payload.get("event_id")
-			or payload.get("id")
-			or payload.get("message", {}).get("id")
-			or f"{payload.get('event')}:{payload.get('account',{}).get('id')}:{payload.get('conversation',{}).get('id')}:{payload.get('message',{}).get('created_at')}"
-		)
-	)
-	if event_id:
-		key = f"dedupe:agentbot:{event_id}"
-		first = await dedupe_once(key, settings.DEDUPE_TTL_SECONDS)
-		if not first:
-			return {"ok": True, "duplicate": True}
 
 	# Extrai IDs
 	account_id = payload.get("account", {}).get("id", ACCOUNT_ID)

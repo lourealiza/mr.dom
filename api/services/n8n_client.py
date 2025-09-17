@@ -6,22 +6,6 @@ USER = os.getenv("N8N_BASIC_AUTH_USER")
 PASS = os.getenv("N8N_BASIC_AUTH_PASSWORD")
 AUTH = (USER, PASS) if USER else None
 
-# Optional full URL overrides for webhooks
-CREATE_LEAD_URL = (os.getenv("N8N_WEBHOOK_CREATE_LEAD_URL") or "").strip()
-SCHEDULE_MEETING_URL = (os.getenv("N8N_WEBHOOK_SCHEDULE_URL") or "").strip()
-
-def _resolve_webhook_url(slug_or_url: str) -> str:
-    s = (slug_or_url or "").strip()
-    if s.startswith("http://") or s.startswith("https://"):
-        return s
-    if s == "create_lead" and CREATE_LEAD_URL:
-        return CREATE_LEAD_URL
-    if s == "schedule_meeting" and SCHEDULE_MEETING_URL:
-        return SCHEDULE_MEETING_URL
-    if not BASE:
-        raise RuntimeError("N8N_BASE_URL não definido e nenhuma URL absoluta de webhook informada")
-    return f"{BASE}/webhook/{s}"
-
 async def trigger(slug: str, payload: dict):
     """Dispara um webhook público/privado do n8n e retorna JSON quando houver."""
     if not BASE:
@@ -32,23 +16,8 @@ async def trigger(slug: str, payload: dict):
         r.raise_for_status()
         ct = r.headers.get("content-type", "")
         return r.json() if "application/json" in ct else {"status": r.status_code}
-
-async def trigger_flexible(slug_or_url: str, payload: dict):
-    """Como trigger(), mas aceita slug ou URL completa e usa overrides por env.
-
-    - slug "create_lead" usa `N8N_WEBHOOK_CREATE_LEAD_URL` se definido
-    - slug "schedule_meeting" usa `N8N_WEBHOOK_SCHEDULE_URL` se definido
-    - se `slug_or_url` já for URL absoluta, usa diretamente
-    - caso contrário, usa `N8N_BASE_URL` + "/webhook/" + slug
-    """
-    url = _resolve_webhook_url(slug_or_url)
-    async with httpx.AsyncClient(timeout=30.0) as c:
-        r = await c.post(url, json=payload, auth=AUTH)
-        r.raise_for_status()
-        ct = r.headers.get("content-type", "")
-        return r.json() if "application/json" in ct else {"status": r.status_code}
 import logging
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any, Optional
 import asyncio
 
 logger = logging.getLogger(__name__)

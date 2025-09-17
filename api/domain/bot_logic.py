@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Dict, Any, Optional, List, Union, Tuple
+from typing import Dict, Any, Optional, List
 from datetime import datetime, timedelta
 import json
 
@@ -277,7 +277,7 @@ class BotLogic:
             return True  # Assumir horário comercial em caso de erro
 
 
-def extract_name(text: str) -> Union[str, None]:
+def extract_name(text: str) -> str | None:
     """Extract name from user text or return None."""
     # Very basic name extraction, could be improved with NLP
     words = text.strip().split()
@@ -291,7 +291,7 @@ def extract_name(text: str) -> Union[str, None]:
     return None
 
 
-def step_transition(state: State, user_text: str) -> Tuple[State, str, str]:
+def step_transition(state: State, user_text: str) -> tuple[State, str, str]:
     """Process user input and return updated state, reply text, and next action.
     
     Args:

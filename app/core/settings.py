@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     DB_USER: str = "app"
     DB_PASSWORD: str = "change-me"
 
-    # Redis
+    # Redis / Rate limiting / Idempotency
     REDIS_URL: str = "redis://redis:6379/0"
     DEDUPE_TTL_SECONDS: int = 300
     RATE_LIMIT_REQUESTS: int = 60
@@ -52,5 +52,4 @@ class Settings(BaseSettings):
             f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
         )
 
-
-settings = Settings(CHATWOOT_WEBHOOK_SECRET="dummy")
+settings = Settings()
