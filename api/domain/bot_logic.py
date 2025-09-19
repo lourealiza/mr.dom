@@ -8,7 +8,7 @@ from .models import (
     MessageAnalysis, LeadQualification, AgentBotResponse,
     ActionType, IntentType, InterestLevel, UrgencyLevel,
     ConversationContext, ContactInfo, BotConfiguration,
-    State,
+    State, BusinessIntent, FitPrimario,
 )
 from ..services.openai_client import OpenAIClient
 
@@ -289,6 +289,105 @@ def extract_name(text: str) -> str | None:
         if word.lower() not in greetings:
             return word.title()
     return None
+
+
+def classify_intent(user_text: str) -> BusinessIntent:
+    """Classify user intent into business categories."""
+    text = user_text.lower()
+    if any(k in text for k in ["agendar", "agenda", "marcar", "diagnostico", "reuniao", "reunião", "call", "meeting"]):
+        return BusinessIntent.AGENDAR
+    if any(k in text for k in ["preço", "preco", "valor", "custa", "orçamento", "orcamento", "budget"]):
+        return BusinessIntent.PRECO
+    if any(k in text for k in ["suporte", "atendimento", "erro", "problema", "bug", "ajuda tecnica", "assistencia", "suporte tecnico"]):
+        return BusinessIntent.SUPORTE
+    return BusinessIntent.PERGUNTA_GERAL
+
+
+def should_handoff(user_text: str, escalation_keywords: Optional[list[str]] = None) -> bool:
+    """Heuristic to decide if conversation should handoff to human."""
+    text = user_text.lower()
+    neg_words = [
+        "reclam", "péssimo", "horrível", "cancelar", "raiva", "insatisfeito", "pior", "terrível", "lento", "indignado",
+    ]
+    human_words = ["humano", "atendente", "pessoa", "falar com", "suporte humano", "atendimento humano"]
+    if any(w in text for w in neg_words + human_words):
+        return True
+    if escalation_keywords and any(k.lower() in text for k in escalation_keywords):
+        return True
+    return False
+
+
+def compute_fit_primary(state: State) -> FitPrimario:
+    """Primary fit: elegivel if time_vendas >= 3."""
+    try:
+        if getattr(state, "time_vendas", None) is not None and int(state.time_vendas) >= 3:
+            return FitPrimario.ELEGIVEL
+    except Exception:
+        pass
+    return FitPrimario.INELEGIVEL
+
+
+def step_transition_v2(state: State, user_text: str) -> tuple[State, str, str]:
+    """New SDR flow collecting: nome+empresa -> email/phone -> time_vendas -> ferramentas -> dor_principal.
+
+    Returns (state, reply_text, action)
+    """
+    # 1) Nome completo e empresa
+    if not state.nome or not state.sobrenome:
+        words = [w for w in user_text.strip().split() if w]
+        if words:
+            state.nome = state.nome or words[0].title()
+            if len(words) > 1:
+                state.sobrenome = state.sobrenome or words[-1].title()
+        if not state.sobrenome:
+            return state, "Obrigado! Poderia me informar seu sobrenome e o nome da empresa?", None
+        if not state.empresa:
+            full = ((state.nome or "") + " " + (state.sobrenome or "")).strip()
+            return state, f"Perfeito, {full}. Qual é o nome da empresa?", None
+
+    if not state.empresa:
+        state.empresa = user_text.strip()
+        return state, "Pode me passar seu e-mail e celular/WhatsApp? Pode ser um dos dois.", None
+
+    # 2) E-mail e celular (precisa pelo menos um)
+    if not state.email and not state.celular:
+        txt = user_text.strip()
+        if "@" in txt and "." in txt and " " not in txt:
+            state.email = txt
+        elif any(ch.isdigit() for ch in txt):
+            state.celular = txt
+        if not state.email and not state.celular:
+            return state, "Para prosseguir, preciso de e-mail ou celular/WhatsApp. Pode enviar um deles?", None
+        if not state.email:
+            return state, "Obrigado! Qual é o seu e-mail?", None
+        if not state.celular:
+            return state, "Perfeito. Pode compartilhar seu celular/WhatsApp (BR)?", None
+
+    # 3) Tamanho do time de vendas (int)
+    if getattr(state, "time_vendas", None) is None:
+        digits = ''.join(ch for ch in user_text if ch.isdigit())
+        if digits:
+            try:
+                state.time_vendas = int(digits)
+            except Exception:
+                state.time_vendas = None
+        if state.time_vendas is None:
+            return state, "Quantas pessoas estão no time de vendas? (número)", None
+        return state, "Obrigado! Quais ferramentas usam hoje? (CRM, automação, mensageria)", None
+
+    # 4) Ferramentas atuais
+    if not state.ferramentas:
+        state.ferramentas = user_text.strip()
+        return state, "Qual dessas descreve melhor sua principal dor? pos_nao_venda, integracao_mkt_vendas, automacao, mensageria ou outro?", None
+
+    # 5) Dor principal (enum)
+    if not state.dor_principal:
+        value = user_text.strip().lower().replace(" ", "_")
+        allowed = {"pos_nao_venda", "integracao_mkt_vendas", "automacao", "mensageria", "outro"}
+        state.dor_principal = value if value in allowed else "outro"
+        return state, "Perfeito! Obrigado pelas informações. Vou direcionar para nosso especialista.", "handoff"
+
+    return state, "Como posso ajudar?", None
 
 
 def step_transition(state: State, user_text: str) -> tuple[State, str, str]:

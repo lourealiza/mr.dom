@@ -6,7 +6,7 @@ import hashlib
 from ..services.chatwoot_client import chatwoot_client
 from ..services.n8n_client import trigger as n8n_trigger
 from ..domain.models import State
-from ..domain.bot_logic import step_transition
+from ..domain.bot_logic import step_transition_v2, classify_intent, compute_fit_primary
 
 router = APIRouter()
 
@@ -50,7 +50,7 @@ async def agentbot(req: Request):
 	state = State(**attrs) if attrs else State()
 
 	# Lógica de passo → próxima mensagem e ação
-	state, reply_text, action = step_transition(state, user_text)
+	state, reply_text, action = step_transition_v2(state, user_text)
 
 	# Persiste novo estado
 	await chatwoot_client.set_attributes(account_id, conversation_id, **state.model_dump())
@@ -78,4 +78,6 @@ async def agentbot(req: Request):
 	if reply_text:
 		await chatwoot_client.reply(account_id, conversation_id, reply_text)
 
-	return {"ok": True}
+	intent = classify_intent(user_text).value
+	fit = compute_fit_primary(state).value
+	return {"ok": True, "intent": intent, "fit_primario": fit}

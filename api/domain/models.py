@@ -18,7 +18,13 @@ class QualifyPayload(BaseModel):
     celular: str
     time_vendas: int = Field(ge=1)
     ferramentas: str
-    dor_principal: Literal["pos_nao_venda", "integracao_mkt_vendas", "ferramentas"]
+    dor_principal: Literal[
+        "pos_nao_venda",
+        "integracao_mkt_vendas",
+        "automacao",
+        "mensageria",
+        "outro",
+    ]
     # Use datetime para validar ISO 8601 e timezone (ex.: 2025-09-04T14:30:00-03:00)
     horario1: datetime
     horario2: datetime
@@ -58,6 +64,7 @@ class State(BaseModel):
     cargo: str | None = None
     email: EmailStr | None = None
     celular: str | None = None
+    time_vendas: int | None = None
     horario1: datetime | None = None
     horario2: datetime | None = None
     ferramentas: str | None = None
@@ -77,6 +84,18 @@ class IntentType(str, Enum):
     QUESTION = "question"
     INTEREST = "interest"
     COMPLAINT = "complaint"
+
+
+class BusinessIntent(str, Enum):
+    AGENDAR = "agendar"
+    PRECO = "preco"
+    SUPORTE = "suporte"
+    PERGUNTA_GERAL = "pergunta_geral"
+
+
+class FitPrimario(str, Enum):
+    ELEGIVEL = "elegivel"
+    INELEGIVEL = "inelegivel"
 
 
 class ActionType(str, Enum):
@@ -143,4 +162,3 @@ class BotConfiguration(BaseModel):
     qualification_questions: list = Field(default_factory=list)
     business_hours: dict = Field(default_factory=dict)
     timezone: str = "UTC"
-
