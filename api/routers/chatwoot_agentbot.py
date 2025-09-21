@@ -17,8 +17,18 @@ ACCOUNT_ID = os.getenv("CHATWOOT_ACCOUNT_ID", os.getenv("ACCOUNT_ID", "changeme"
 async def verify_request(req: Request) -> bool:
 	body = await req.body()
 	sig = req.headers.get("X-Chatwoot-Signature", "")
-	mac = hmac.new(HMAC_SECRET.encode(), msg=body, digestmod=hashlib.sha256)
-	return hmac.compare_digest(sig, mac.hexdigest())
+	# Accept raw hex or prefixed form like "sha256=<hex>"
+	try:
+		provided = sig.strip()
+		if "=" in provided:
+			# handle case-insensitive algo prefix
+			parts = provided.split("=", 1)
+			provided = parts[1].strip() if len(parts) == 2 else provided
+		mac = hmac.new(HMAC_SECRET.encode(), msg=body, digestmod=hashlib.sha256)
+		expected = mac.hexdigest()
+		return hmac.compare_digest(provided, expected)
+	except Exception:
+		return False
 
 @router.post("/agentbot")
 async def agentbot(req: Request):

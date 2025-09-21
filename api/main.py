@@ -14,6 +14,7 @@ if _env_path.exists():
 # Import routers
 from .routers.chatwoot_agentbot import router as chatwoot_router
 from .routers.health import router as health_router
+from .routers.assistant_preview import router as assistant_router
 
 # Import core configuration
 from app.core.logging import configure_logging
@@ -42,6 +43,13 @@ app.include_router(
     chatwoot_router,
     prefix="/api/v1/webhooks",
     tags=["webhooks"]
+)
+
+# Assistant preview (UAT)
+app.include_router(
+    assistant_router,
+    prefix="/api/v1",
+    tags=["assistant"]
 )
 
 # Setup Prometheus metrics

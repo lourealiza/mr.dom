@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: Mr.DOM API
+  version: "0.1.0"
+servers:
+  - url: https://api.seudominio.com
+    description: Produção
+  - url: http://localhost:8000
+    description: Local
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+    AgentQueryRequest:
+      type: object
+      required: [input]
+      properties:
+        input:
+          type: string
+          example: "Teste do Postman"
+        metadata:
+          type: object
+          additionalProperties: true
+          example: { "source": "postman" }
+    AgentQueryResponse:
+      type: object
+      properties:
+        output:
+          type: string
+          example: "Resposta do agente"
+    RagSearchRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          example: "Qual é a política de devolução?"
+        top_k:
+          type: integer
+          default: 5
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+  /agents/query:
+    post:
+      summary: Consultar agente
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentQueryRequest'
+      responses:
+        "200":
+          description: Resposta do agente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentQueryResponse'
+  /rag/search:
+    post:
+      summary: Busca RAG
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RagSearchRequest'
+      responses:
+        "200":
+          description: Resultados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        text: { type: string }
+                        score: { type: number }
