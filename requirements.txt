@@ -33,5 +33,5 @@ mypy==1.7.1
 # Utilitários
 python-dotenv==1.0.1
 python-dateutil==2.9.0.post0
-redis==5.0.3  # Para health checks do Redis
+redis==6.4.0  # Para health checks do Redis
 asgi-correlation-id==4.2.0  # Para request IDs
