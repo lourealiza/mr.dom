@@ -16,13 +16,11 @@ RUN apk update && apk add --no-cache \
     wget \
     udev \
     alsa-lib \
-    atk \
     cups-libs \
     libxcomposite \
     libxrandr \
-    libxss \
-    gconf \
-    ttf-liberation
+    ttf-liberation \
+    xvfb
 
 # Configure variáveis de ambiente para Puppeteer
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
@@ -34,11 +32,11 @@ USER node
 # Defina o diretório de trabalho
 WORKDIR /app
 
-# Copie os arquivos do projeto
-COPY package.json package-lock.json ./
+# Copie os arquivos do projeto (se existirem)
+COPY package*.json ./
 
-# Instale as dependências do projeto
-RUN npm install
+# Instale as dependências do projeto (se package.json existir)
+RUN if [ -f package.json ]; then npm install; fi
 
 # Copie o restante dos arquivos
 COPY . .
