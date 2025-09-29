@@ -1,6 +1,6 @@
 # FastAPI e dependências principais
 fastapi==0.114.1
-uvicorn[standard]==0.30.6
+uvicorn[standard]==0.37.0
 pydantic==2.8.2
 pydantic-settings==2.10.1
 
