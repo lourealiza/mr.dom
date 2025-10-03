@@ -89,6 +89,9 @@ except Exception as e:
 - [ ] Obter service_role key do dashboard  
 - [ ] Obter database URL com senha
 - [ ] Atualizar config.env com as credenciais
-- [ ] Instalar dependência `supabase`
-- [ ] Testar conexão
+- [x] Instalar dependência `supabase`
+- [x] Testar conexão
+- [x] Criar scripts para tabela n8n_chat_histories
+- [ ] Iniciar PostgreSQL (Docker ou local)
+- [ ] Executar criação da tabela
 - [ ] Configurar tabelas necessárias no Supabase
