@@ -16,6 +16,9 @@ from .routers.chatwoot_agentbot import router as chatwoot_router
 from .routers.health import router as health_router
 from .routers.assistant_preview import router as assistant_router
 
+# Importar AgentOS routers (comentado - descomentar quando agno estiver instalado)
+# from .routers.agents import router as agents_router
+
 # Import core configuration
 from app.core.logging import configure_logging
 from app.core.middlewares import add_middlewares
@@ -51,6 +54,13 @@ app.include_router(
     prefix="/api/v1",
     tags=["assistant"]
 )
+
+# AgentOS routers (descomentar quando agno estiver instalado e configurado)
+# app.include_router(
+#     agents_router,
+#     prefix="/api/v1/agents",
+#     tags=["agents"]
+# )
 
 # Setup Prometheus metrics
 Instrumentator().instrument(app).expose(
