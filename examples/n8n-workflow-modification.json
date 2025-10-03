@@ -1,0 +1,150 @@
+{
+  "name": "MrDom SDR com AgentOS Integration",
+  "description": "Workflow modificado para integrar AgentOS com o sistema N8N existente",
+  "modifications": {
+    "removed_nodes": [
+      "Agente de IA1",
+      "Modelo: OpenAI Chat1", 
+      "Modelo de Chat AWS Bedrock1",
+      "Modelo de Chat AWS Bedrock (Fallback)1",
+      "Repositório Vetorial Supabase1",
+      "Vetorização AWS Bedrock1",
+      "Executar RAG Mr. DOM1",
+      "Parser de Saída Estruturada1",
+      "Simple Memory"
+    ],
+    "added_nodes": [
+      {
+        "id": "agentos-api-call",
+        "name": "AgentOS API Call",
+        "type": "n8n-nodes-base.httpRequest",
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $vars.AGENTOS_API_URL || 'http://localhost:8000' }}/api/v1/agents/process-best",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"message\": \"{{ $('Normalizador único (lead + flags + conversation)1').item.json.content || $('Edit Fields').item.json.content }}\",\n  \"context\": {\n    \"conversation_id\": \"{{ $('Edit Fields').item.json.conversation_id }}\",\n    \"account_id\": \"{{ $('Edit Fields').item.json.account_id }}\",\n    \"lead_exists\": {{ $('If').item.json.id ? 'true' : 'false' }},\n    \"lead_data\": {{ $('GetComments').item.json || 'null' }},\n    \"phone\": \"{{ $('arruma o telefone1').item.json.telefone }}\",\n    \"nome\": \"{{ $('Edit Fields2').item.json['body.body.payload.conversation.meta.sender.name'] || '' }}\",\n    \"email\": \"{{ $('Edit Fields2').item.json['body.body.payload.conversation.meta.sender.email'] || '' }}\",\n    \"origem\": \"{{ $('Normalizador único (lead + flags + conversation)1').item.json.custom_attributes?.origem || 'MrDOM' }}\"\n  }\n}",
+          "options": {
+            "timeout": 30000,
+            "retry": {
+              "enabled": true,
+              "maxAttempts": 2
+            }
+          }
+        },
+        "position": [-1392, 288]
+      },
+      {
+        "id": "agentos-fallback",
+        "name": "AgentOS Fallback",
+        "type": "n8n-nodes-base.if",
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $json.error }}",
+                "operation": "isNotEmpty"
+              }
+            ]
+          }
+        },
+        "position": [-1200, 288]
+      },
+      {
+        "id": "original-agent-backup",
+        "name": "Original Agent Backup",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('Normalizador único (lead + flags + conversation)1').item.json.content }}",
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "Você é Mr. DOM, SDR virtual do DOM360. Responda de forma consultiva e direta. Se AgentOS não estiver disponível, use este backup."
+          }
+        },
+        "position": [-1000, 288]
+      }
+    ],
+    "modified_connections": {
+      "Limit1": {
+        "main": [
+          [
+            {
+              "node": "agentos-api-call",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "agentos-api-call": {
+        "main": [
+          [
+            {
+              "node": "agentos-fallback",
+              "type": "main", 
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "agentos-fallback": {
+        "main": [
+          [
+            {
+              "node": "original-agent-backup",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "ResponderChatwoot",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "original-agent-backup": {
+        "main": [
+          [
+            {
+              "node": "ResponderChatwoot",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "environment_variables": {
+    "AGENTOS_API_URL": "http://localhost:8000",
+    "AGENTOS_ENABLED": "true",
+    "AGENTOS_TIMEOUT": "30000"
+  },
+  "testing_instructions": {
+    "step_1": "Importar este workflow modificado no N8N",
+    "step_2": "Configurar variáveis de ambiente AGENTOS_API_URL",
+    "step_3": "Executar AgentOS API: python examples/agentos_integration_example.py",
+    "step_4": "Testar com webhook do Chatwoot",
+    "step_5": "Verificar logs da API AgentOS",
+    "step_6": "Testar cenário de fallback (desligar API)"
+  },
+  "expected_behavior": {
+    "normal_flow": "Webhook → Normalização → CRM Check → AgentOS API → Resposta",
+    "fallback_flow": "Webhook → Normalização → CRM Check → AgentOS Error → Original Agent → Resposta",
+    "performance": "AgentOS deve responder em < 10 segundos",
+    "context": "Dados do CRM e histórico devem ser enviados para AgentOS"
+  }
+}
