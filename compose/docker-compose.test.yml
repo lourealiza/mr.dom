@@ -1,0 +1,138 @@
+version: '3.8'
+
+services:
+  # API Principal para Testes
+  mrdom-sdr-api-test:
+    build:
+      context: ..
+      dockerfile: compose/Dockerfile
+    container_name: mrdom-sdr-api-test
+    ports:
+      - "8001:8000"  # Porta diferente para não conflitar com produção
+    environment:
+      - CHATWOOT_BASE_URL=${CHATWOOT_BASE_URL}
+      - CHATWOOT_ACCESS_TOKEN=${CHATWOOT_ACCESS_TOKEN}
+      - CHATWOOT_ACCOUNT_ID=${CHATWOOT_ACCOUNT_ID}
+      - N8N_BASE_URL=${N8N_BASE_URL}
+      - N8N_API_KEY=${N8N_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-3.5-turbo}
+      - BOT_WELCOME_MESSAGE=${BOT_WELCOME_MESSAGE}
+      - ESCALATION_KEYWORDS=${ESCALATION_KEYWORDS}
+      - AUTO_RESPONSE_ENABLED=${AUTO_RESPONSE_ENABLED:-true}
+      - BUSINESS_HOURS=${BUSINESS_HOURS}
+      - TIMEZONE=${TIMEZONE:-America/Sao_Paulo}
+      - PYTHONPATH=/app
+      - TESTING=true
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - ../api:/app
+      - ../app:/app/app
+      - ./logs:/app/logs
+      - ../test.env:/app/.env  # Carrega configurações de teste
+    restart: unless-stopped
+    depends_on:
+      - redis-test
+      - postgres
+    networks:
+      - mrdom-test-network
+    command: ["python", "-m", "pytest", "/app/tests", "-v", "--tb=short"]
+
+  # Redis para testes
+  redis-test:
+    image: redis:7-alpine
+    container_name: mrdom-redis-test
+    ports:
+      - "6380:6379"  # Porta diferente para testes
+    volumes:
+      - redis_test_data:/data
+    restart: unless-stopped
+    networks:
+      - mrdom-test-network
+    command: redis-server --appendonly yes --port 6379
+
+  # PostgreSQL principal (compartilhado com produção)
+  postgres:
+    image: postgres:15-alpine
+    container_name: mrdom-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${DB_NAME:-app}
+      - POSTGRES_USER=${DB_USER:-app}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-mrdom2024}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    restart: unless-stopped
+    networks:
+      - mrdom-test-network
+
+  # N8N para testes (opcional - pode usar externo)
+  n8n-test:
+    image: n8nio/n8n:latest
+    container_name: mrdom-n8n-test
+    ports:
+      - "5679:5678"  # Porta diferente para testes
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin123}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5679/
+      - GENERIC_TIMEZONE=${TIMEZONE:-America/Sao_Paulo}
+      - N8N_ENCRYPTION_KEY=test_encryption_key_12345
+    volumes:
+      - n8n_test_data:/home/node/.n8n
+    restart: unless-stopped
+    networks:
+      - mrdom-test-network
+
+  # Mock Server para simular APIs externas durante testes
+  mock-server:
+    image: wiremock/wiremock:latest
+    container_name: mrdom-mock-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./wiremock:/home/wiremock
+    command: ["--global-response-templating", "--verbose"]
+    networks:
+      - mrdom-test-network
+
+  # Test Runner (container dedicado para executar testes)
+  test-runner:
+    build:
+      context: ..
+      dockerfile: compose/Dockerfile.test
+    container_name: mrdom-test-runner
+    environment:
+      - PYTHONPATH=/app
+      - TESTING=true
+      - REDIS_URL=redis://redis-test:6379/1
+      - DATABASE_URL=postgresql://app:mrdom2024@postgres:5432/app
+    volumes:
+      - ../api:/app
+      - ../app:/app/app
+      - ../test.env:/app/.env
+      - ./test-results:/app/test-results
+    depends_on:
+      - mrdom-sdr-api-test
+      - redis-test
+      - postgres
+      - mock-server
+    networks:
+      - mrdom-test-network
+    command: ["python", "-m", "pytest", "/app/tests", "-v", "--tb=short", "--junitxml=/app/test-results/junit.xml", "--html=/app/test-results/report.html", "--self-contained-html"]
+
+volumes:
+  redis_test_data:
+  postgres_data:
+  n8n_test_data:
+
+networks:
+  mrdom-test-network:
+    driver: bridge

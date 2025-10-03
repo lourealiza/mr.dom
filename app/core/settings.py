@@ -27,6 +27,12 @@ class Settings(BaseSettings):
     # Redis
     REDIS_URL: str = "redis://redis:6379/0"
 
+    # Supabase
+    SUPABASE_URL: Optional[str] = None
+    SUPABASE_ANON_KEY: Optional[str] = None
+    SUPABASE_SERVICE_ROLE_KEY: Optional[str] = None
+    SUPABASE_DATABASE_URL: Optional[str] = None
+
     # Chatwoot
     CHATWOOT_WEBHOOK_SECRET: str
 

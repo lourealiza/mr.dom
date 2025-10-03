@@ -1,0 +1,3 @@
+@echo off 
+echo Iniciando Redis... 
+redis-server.exe 

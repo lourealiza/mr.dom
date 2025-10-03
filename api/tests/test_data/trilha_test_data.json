@@ -1,0 +1,187 @@
+{
+  "usuarios_teste": [
+    {
+      "id": "user_001",
+      "nome": "Ana",
+      "sobrenome": "Silva",
+      "empresa": "ACME Tecnologia",
+      "cargo": "Diretora Comercial",
+      "email": "ana.silva@acme.com.br",
+      "telefone": "+5511988887777",
+      "telefone_formatado": "+55 (11) 98888-7777",
+      "segmento": "Tecnologia B2B",
+      "tamanho_time": 8,
+      "ferramentas_crm": "Pipedrive",
+      "ferramentas_marketing": "RD Station",
+      "canais_mensageria": "WhatsApp, Email",
+      "principal_dor": "Pós‑não‑venda inexistente",
+      "origem": "WhatsApp",
+      "fuso": "America/Sao_Paulo"
+    },
+    {
+      "id": "user_002",
+      "nome": "Carlos",
+      "sobrenome": "Santos",
+      "empresa": "TechStart Ltda",
+      "cargo": "CEO",
+      "email": "carlos@techstart.com.br",
+      "telefone": "+5521999998888",
+      "telefone_formatado": "+55 (21) 99999-8888",
+      "segmento": "Startup",
+      "tamanho_time": 3,
+      "ferramentas_crm": "HubSpot",
+      "ferramentas_marketing": "Mailchimp",
+      "canais_mensageria": "WhatsApp",
+      "principal_dor": "Falta de automação",
+      "origem": "Site",
+      "fuso": "America/Sao_Paulo"
+    },
+    {
+      "id": "user_003",
+      "nome": "Maria",
+      "sobrenome": "Oliveira",
+      "empresa": "Consultoria Plus",
+      "cargo": "Gerente de Marketing",
+      "email": "maria.oliveira@consultoriaplus.com",
+      "telefone": "+5531988887777",
+      "telefone_formatado": "+55 (31) 98888-7777",
+      "segmento": "Consultoria",
+      "tamanho_time": 12,
+      "ferramentas_crm": "Salesforce",
+      "ferramentas_marketing": "ActiveCampaign",
+      "canais_mensageria": "Instagram, Email",
+      "principal_dor": "Qualificação de leads",
+      "origem": "Instagram",
+      "fuso": "America/Sao_Paulo"
+    },
+    {
+      "id": "user_004",
+      "nome": "João",
+      "sobrenome": "Ferreira",
+      "empresa": "E-commerce Brasil",
+      "cargo": "Diretor de Vendas",
+      "email": "joao.ferreira@ecommercebrasil.com.br",
+      "telefone": "+5541999888777",
+      "telefone_formatado": "+55 (41) 99988-8777",
+      "segmento": "E-commerce",
+      "tamanho_time": 15,
+      "ferramentas_crm": "Pipedrive",
+      "ferramentas_marketing": "RD Station",
+      "canais_mensageria": "Telegram, WhatsApp",
+      "principal_dor": "Retenção de clientes",
+      "origem": "Telegram",
+      "fuso": "America/Sao_Paulo"
+    },
+    {
+      "id": "user_005",
+      "nome": "Fernanda",
+      "sobrenome": "Costa",
+      "empresa": "Agência Digital",
+      "cargo": "Sócia-fundadora",
+      "email": "fernanda@agenciadigital.com",
+      "telefone": "+5551999888777",
+      "telefone_formatado": "+55 (51) 99988-8777",
+      "segmento": "Agência",
+      "tamanho_time": 6,
+      "ferramentas_crm": "HubSpot",
+      "ferramentas_marketing": "Mailchimp",
+      "canais_mensageria": "WhatsApp, Email",
+      "principal_dor": "Escalabilidade",
+      "origem": "Site",
+      "fuso": "America/Sao_Paulo"
+    }
+  ],
+  "usuarios_invalidos": [
+    {
+      "id": "invalid_001",
+      "nome": "Teste",
+      "sobrenome": "Inválido",
+      "email": "email-invalido",
+      "telefone": "11988887777",
+      "problema": "Email sem @"
+    },
+    {
+      "id": "invalid_002",
+      "nome": "Teste",
+      "sobrenome": "Inválido",
+      "email": "teste@",
+      "telefone": "988887777",
+      "problema": "Email incompleto e telefone sem DDD"
+    },
+    {
+      "id": "invalid_003",
+      "nome": "",
+      "sobrenome": "",
+      "email": "teste@teste.com",
+      "telefone": "+5511988887777",
+      "problema": "Nome e sobrenome vazios"
+    }
+  ],
+  "horarios_disponiveis": [
+    {
+      "data": "2025-10-02",
+      "horarios": [
+        "10:00",
+        "14:00"
+      ],
+      "fuso": "America/Sao_Paulo"
+    },
+    {
+      "data": "2025-10-03",
+      "horarios": [
+        "09:00",
+        "11:00",
+        "15:00"
+      ],
+      "fuso": "America/Sao_Paulo"
+    }
+  ],
+  "templates_teste": {
+    "opening": "Olá {{nome}}! 👋 Sou o assistente virtual da MrDom. Posso fazer 3 perguntas rápidas para entender melhor suas necessidades?",
+    "qualificacao_perguntas": [
+      "Qual é o tamanho da sua empresa?",
+      "Qual ferramenta de CRM vocês usam atualmente?",
+      "Qual é o principal desafio na gestão de leads?"
+    ],
+    "pitch_geral": "Baseado nas suas respostas, a MrDom pode ajudar com {{principal_dor}}. Temos uma solução específica para empresas do seu segmento.",
+    "cta_agenda": "Que tal agendarmos uma conversa de 30 minutos para eu apresentar como podemos resolver isso? Tenho disponível: {{horario1}} ou {{horario2}}.",
+    "confirmacao_agendada": "Perfeito {{nome}}! Seu agendamento está confirmado para {{data}} às {{horario}}. Aqui estão os links: {{link_meet}} | {{link_ics}}",
+    "pos_nao_venda_D0": "Oi {{nome}}! Entendo que você precisa pensar. Que tal tentarmos novamente? Tenho disponível: {{horario1}} ou {{horario2}}.",
+    "pos_nao_venda_D2": "{{nome}}, como está? Ainda temos disponível: {{horario1}} ou {{horario2}}. Vale a pena uma conversa rápida!",
+    "pos_nao_venda_D7": "{{nome}}, tudo bem? Não desista da oportunidade! Temos: {{horario1}} ou {{horario2}}.",
+    "pos_nao_venda_D14": "Última tentativa, {{nome}}! Últimos horários: {{horario1}} ou {{horario2}}. Não perca essa oportunidade!"
+  },
+  "cenarios_teste": {
+    "WPP-01": {
+      "descricao": "WhatsApp → abertura → qualificação → agenda → confirmação",
+      "usuario": "user_001",
+      "canal": "WhatsApp",
+      "fluxo": ["opening", "qualificacao", "pitch", "cta_agenda", "confirmacao"]
+    },
+    "WPP-02": {
+      "descricao": "WhatsApp com telefone sem +55 → normalização E.164",
+      "usuario": "user_002",
+      "canal": "WhatsApp",
+      "telefone_original": "11999998888",
+      "telefone_esperado": "+5521999998888"
+    },
+    "SITE-01": {
+      "descricao": "Widget do site → jornada completa",
+      "usuario": "user_003",
+      "canal": "Site",
+      "fluxo": ["opening", "qualificacao", "pitch", "cta_agenda", "confirmacao"]
+    },
+    "IG-01": {
+      "descricao": "Instagram DM → captação de origem preservada",
+      "usuario": "user_004",
+      "canal": "Instagram",
+      "origem_esperada": "Instagram"
+    },
+    "TG-01": {
+      "descricao": "Telegram → jornada completa",
+      "usuario": "user_005",
+      "canal": "Telegram",
+      "fluxo": ["opening", "qualificacao", "pitch", "cta_agenda", "confirmacao"]
+    }
+  }
+}
